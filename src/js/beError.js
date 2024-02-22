@@ -1,14 +1,18 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-export function beError() {
+export const noImagesError =
+  'Sorry, there are no images matching your search query. Please try again!';
+export const writeSomething = 'Please, write something';
+
+export function beError(message) {
   iziToast.error({
     position: 'topRight',
+
     maxWidth: '432',
     backgroundColor: '#ef4040',
     messageColor: '#fafafb',
     messageSize: '16px',
-    message:
-      'Sorry, there are no images matching your search query.Please try again!',
+    message: message,
   });
 }

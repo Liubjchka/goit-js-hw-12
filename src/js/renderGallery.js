@@ -4,12 +4,13 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { refs } from './refs';
 import { beError } from './beError';
 import { markup } from './markup';
+import { noImagesError } from './beError';
 
-export function renderGallary(answer) {
+export function renderGallery(answer) {
   const result = answer.hits.map(markup).join('');
 
   if (answer.hits.length) {
-    refs.galleryList.innerHTML = result;
+    refs.galleryList.insertAdjacentHTML('beforeend', result);
 
     const lightbox = new SimpleLightbox('.gallery a', {
       captions: true,
@@ -20,6 +21,6 @@ export function renderGallary(answer) {
     lightbox.on('show.simplelightbox');
     lightbox.refresh();
   } else {
-    beError();
+    beError(noImagesError);
   }
 }
