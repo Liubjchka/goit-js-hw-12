@@ -10,24 +10,27 @@ import { writeSomething } from './js/beError.js';
 import { endSearchesRults } from './js/beError.js';
 import { scrollPage } from './js/scrollPage.js';
 
+refs.form.addEventListener('submit', onFormSubmit);
+refs.loadMore.addEventListener('click', onLoadMore);
+
 let query = '';
 let page = 1;
 const perPage = 15;
 
 // ===========pixabayApi===========
 
-async function pixabayApi(input) {
-  const API_KEY = '42447990-17cd7de231c9689be9e26f0f6';
-  const BASE_URL = 'https://pixabay.com/api/';
-  const param = `q=${input}&image_type=photo&orientation=horizontal&safesearch=true`;
-  const URL = `${BASE_URL}?key=${API_KEY}&${param}`;
+async function pixabayApi(query) {
+  const BASE_URL = 'https://pixabay.com';
+  const END_POINT = '/api/';
+  const KEY_API = '?key=42447990-17cd7de231c9689be9e26f0f6';
+  const PARAMS = `&q=${query}&image_type=photo&orientation=horizontal&safesearch=true`;
+
+  const URL = BASE_URL + END_POINT + KEY_API + PARAMS;
 
   const resp = await axios.get(URL);
   return resp.data;
 }
-
-refs.form.addEventListener('submit', onFormSubmit);
-refs.loadMore.addEventListener('click', onLoadMore);
+pixabayApi('potatos');
 
 // ===========onFormSubmit===========
 
@@ -37,11 +40,11 @@ async function onFormSubmit(event) {
   page += 1;
 
   refs.galleryList.innerHTML = '';
-  query = event.currentTarget.elements.input.value.trim();
+  const query = event.target.elements.query.value.trim();
 
   if (!query) {
     refs.form.elements.input.value = '';
-    beError(writeSomething);
+    beError(console.error());
     return;
   }
 
@@ -51,6 +54,7 @@ async function onFormSubmit(event) {
     const answer = await pixabayApi(query);
     renderGallery(answer);
     statusBtn(answer, page);
+    console.log(answer);
   } catch (error) {
     beError(noImagesError);
   } finally {

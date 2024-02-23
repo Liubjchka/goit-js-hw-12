@@ -5,4 +5,5 @@ export const refs = {
   loader: document.querySelector('.loader'),
   galleryList: document.querySelector('.gallery'),
   loadMore: document.querySelector('.btn-load-more'),
+  input: document.querySelector('input'),
 };
