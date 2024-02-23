@@ -2,25 +2,24 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { refs } from './refs';
-import { beError } from './beError';
 import { markup } from './markup';
-import { noImagesError } from './beError';
+import { onBtnLoadMore } from './switchBtn';
 
 export function renderGallery(answer) {
   const result = answer.hits.map(markup).join('');
 
-  if (answer.hits.length) {
-    refs.galleryList.insertAdjacentHTML('beforeend', result);
+  refs.galleryList.insertAdjacentHTML('beforeend', result);
 
-    const lightbox = new SimpleLightbox('.gallery a', {
-      captions: true,
-      captionSelector: 'img',
-      captionPosition: 'bottom',
-      captionsData: 'alt',
-    });
-    lightbox.on('show.simplelightbox');
-    lightbox.refresh();
-  } else {
-    beError(noImagesError);
+  if (answer.hits.length >= 15) {
+    onBtnLoadMore();
   }
+
+  const lightbox = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionSelector: 'img',
+    captionPosition: 'bottom',
+    captionsData: 'alt',
+  });
+
+  lightbox.refresh();
 }
