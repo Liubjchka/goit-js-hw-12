@@ -9,8 +9,8 @@ export function offLoader() {
 }
 
 export function offBtnLoadMore() {
-  refs.btnLoadMore.classList.add('hidden');
+  refs.loadMore.classList.add('hidden');
 }
 export function onBtnLoadMore() {
-  refs.btnLoadMore.classList.remove('hidden');
+  refs.loadMore.classList.remove('hidden');
 }

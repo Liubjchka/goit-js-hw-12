@@ -1,9 +1,8 @@
 export const refs = {
   container: document.querySelector('.container'),
-  form: document.querySelector('#singleImagesForm'),
+  form: document.querySelector('.form'),
   btn: document.querySelector('.form-button'),
-  loader: document.querySelector('#singleImages'),
+  loader: document.querySelector('.loader'),
   galleryList: document.querySelector('.gallery'),
-  btnLoadMore: document.querySelector('.btn-load-more'),
-  loadMore: document.querySelector('.load-more'),
+  loadMore: document.querySelector('.btn-load-more'),
 };

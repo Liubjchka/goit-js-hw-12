@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container">
-      <form class="user-form" id="singleImagesForm">
+      <form class="form" id="singleImagesForm">
         <input
           type="text"
           class="form-input"
@@ -23,36 +23,8 @@
       <ul class="gallery"></ul>
     </div>
     <!-- =============== -->
-    <div class="gallery-controls">
-      <button
-        type="button"
-        class="btn-load-more hidden"
-        data-action="load-more"
-      >
-        <span class="label">Load more</span>
-        <span class="load-more" role="status" aria-hidden="true"></span>
-      </button>
-    </div>
-    <!-- =============== -->
-    <span class="loader hidden" id="singleImages"
-      >Loading images, please wait...</span
-    >
-    <!-- =============== -->
+    <button type="button" class="btn-load-more hidden">Load more</button>
+    <span class="loader hidden">Loading images, please wait...</span>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
-
-<!-- <div>
-      <button
-        type="button"
-        class="btn btn-primary button js-btn-load hidden"
-        data-action="load-more"
-      >
-        <span class="label">Load more</span>
-        <span
-          class="js-loader spinner-border spinner-border-sm spinner hidden"
-          role="status"
-          aria-hidden="true"
-        ></span>
-      </button>
-    </div> -->

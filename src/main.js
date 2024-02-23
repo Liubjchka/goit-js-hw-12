@@ -1,21 +1,33 @@
-import { pixabayApi } from './js/pixabayApi.js';
+import axios from 'axios';
+
 import { refs } from './js/refs.js';
 import { onLoader } from './js/switchBtn.js';
 import { offLoader } from './js/switchBtn.js';
-import { offBtnLoadMore } from './js/switchBtn.js';
-import { onBtnLoadMore } from './js/switchBtn.js';
 import { renderGallery } from './js/renderGallery.js';
 import { beError } from './js/beError.js';
 import { noImagesError } from './js/beError.js';
 import { writeSomething } from './js/beError.js';
 import { endSearchesRults } from './js/beError.js';
+import { scrollPage } from './js/scrollPage.js';
+
+let query = '';
+let page = 1;
+const perPage = 15;
+
+// ===========pixabayApi===========
+
+async function pixabayApi(input) {
+  const API_KEY = '42447990-17cd7de231c9689be9e26f0f6';
+  const BASE_URL = 'https://pixabay.com/api/';
+  const param = `q=${input}&image_type=photo&orientation=horizontal&safesearch=true`;
+  const URL = `${BASE_URL}?key=${API_KEY}&${param}`;
+
+  const resp = await axios.get(URL);
+  return resp.data;
+}
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMore.addEventListener('click', onLoadMore);
-
-let userTag = '';
-let page = 1;
-const perPage = 15;
 
 // ===========onFormSubmit===========
 
@@ -25,9 +37,9 @@ async function onFormSubmit(event) {
   page += 1;
 
   refs.galleryList.innerHTML = '';
-  userTag = event.currentTarget.elements.input.value.trim();
+  query = event.currentTarget.elements.input.value.trim();
 
-  if (!userTag) {
+  if (!query) {
     refs.form.elements.input.value = '';
     beError(writeSomething);
     return;
@@ -36,7 +48,7 @@ async function onFormSubmit(event) {
   onLoader();
 
   try {
-    const answer = await pixabayApi(userTag, page, perPage);
+    const answer = await pixabayApi(query);
     renderGallery(answer);
     statusBtn(answer, page);
   } catch (error) {
@@ -54,7 +66,7 @@ async function onLoadMore() {
   onLoader();
 
   try {
-    const answer = await pixabayApi(userTag, page, perPage);
+    const answer = await pixabayApi(query);
     renderGallery(answer);
     scrollPage();
     offLoader();
@@ -63,26 +75,15 @@ async function onLoadMore() {
   }
 }
 
-function scrollPage() {
-  if (searchParams.page > 1) {
-    const rect = document
-      .querySelector('.gallery-item')
-      .getBoundingClientRect();
-    window.scrollBy({ top: rect.height * 2, left: 0, behavior: 'smooth' });
-  }
-}
-
-// ===========onLoadMore===========
-
+// ===============statusBt==========
 function statusBtn(data, page) {
   const maxPage = Math.ceil(data.totalHits / 15);
-
+  console.log(maxPage);
   if (maxPage <= page) {
-    offBtnLoadMore();
-    offLoader();
-    beError(endSearchesRults);
+    refs.loadMore.classList.add('hidden');
+    refs.loader.classList.add('hidden');
+    iziToast.error(endSearchesRults);
   } else {
-    onLoadMore();
-    onBtnLoadMore();
+    refs.loadMore.classList.remove('hidden');
   }
 }
