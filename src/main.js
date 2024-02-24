@@ -18,6 +18,7 @@ let query;
 let page = 1;
 const perPage = 15;
 let maxPage;
+let lightbox;
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMore.addEventListener('click', onLoadMoreClick);
@@ -29,6 +30,7 @@ async function onFormSubmit(event) {
   if (!query) {
     beError(writeSomething);
     offLoader();
+    offBtnLoadMore();
     return;
   }
 
@@ -40,6 +42,7 @@ async function onFormSubmit(event) {
   refs.galleryList.innerHTML = '';
   renderGallery(data.hits);
   offLoader();
+
   statusHiddenBtn(data, page);
   event.target.reset();
 }
@@ -61,7 +64,11 @@ function renderGallery(hits) {
   if (hits.length > 0) {
     refs.galleryList.insertAdjacentHTML('beforeend', result);
 
-    const lightbox = new SimpleLightbox('.gallery a', {
+    if (lightbox) {
+      lightbox.destroy();
+    }
+
+    lightbox = new SimpleLightbox('.gallery a', {
       captions: true,
       captionSelector: 'img',
       captionPosition: 'bottom',
@@ -71,7 +78,7 @@ function renderGallery(hits) {
   }
 }
 
-function statusHiddenBtn(data, page) {
+function statusHiddenBtn(page) {
   if (page >= maxPage) {
     offBtnLoadMore();
     offLoader();
