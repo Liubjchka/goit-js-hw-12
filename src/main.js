@@ -3,7 +3,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { refs } from './js/refs.js';
 import { pixabayApi } from './js/pixabayApi.js';
-import { beError } from './js/beError.js';
+import { beError, noImagesError } from './js/beError.js';
 import { writeSomething } from './js/beError.js';
 import { hitElements } from './js/hitElements.js';
 import { endSearchesRults } from './js/beError.js';
@@ -76,7 +76,7 @@ function statusBtn(data) {
   if (page >= maxPage) {
     offBtnLoadMore();
     offLoader();
-    iziToast.error(endSearchesRults);
+    beError(noImagesError);
   } else {
     onBtnLoadMore();
     onLoader();
