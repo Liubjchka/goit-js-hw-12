@@ -26,15 +26,17 @@ async function onFormSubmit(event) {
   event.preventDefault();
   query = event.target.elements.input.value.trim();
 
+  if (!query) {
+    beError(writeSomething);
+    offLoader();
+    return;
+  }
+
   onLoader();
   page = 1;
   const data = await pixabayApi(query, page);
-  console.log(data);
+
   maxPage = Math.ceil(data.totalHits / 15);
-  if (!query) {
-    beError(writeSomething);
-    return;
-  }
   refs.galleryList.innerHTML = '';
   renderGallery(data.hits);
   offLoader();
