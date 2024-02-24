@@ -43,7 +43,6 @@ async function onFormSubmit(event) {
 
   event.target.reset();
 }
-pixabayApi(query);
 
 async function onLoadMoreClick() {
   page += 1;
