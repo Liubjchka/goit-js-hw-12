@@ -34,16 +34,15 @@ async function onFormSubmit(event) {
     return;
   }
 
-  onLoader();
-  page = 1;
-  const data = await pixabayApi(query, page);
-
   if (data.hits.length === 0) {
     beError(noImagesError);
     offLoader();
     offBtnLoadMore();
     return;
   }
+  onLoader();
+  page = 1;
+  const data = await pixabayApi(query, page);
 
   maxPage = Math.ceil(data.totalHits / 15);
   refs.galleryList.innerHTML = '';
