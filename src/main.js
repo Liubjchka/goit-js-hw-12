@@ -75,7 +75,7 @@ function statusHiddenBtn(data, page) {
   if (page >= maxPage) {
     offBtnLoadMore();
     offLoader();
-    beError(noImagesError);
+    beError(endSearchesRults);
   } else {
     onBtnLoadMore();
   }
