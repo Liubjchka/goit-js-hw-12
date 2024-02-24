@@ -7,6 +7,12 @@ import { beError } from './js/beError.js';
 import { writeSomething } from './js/beError.js';
 import { hitElements } from './js/hitElements.js';
 import { endSearchesRults } from './js/beError.js';
+import {
+  offBtnLoadMore,
+  offLoader,
+  onBtnLoadMore,
+  onLoader,
+} from './js/switchBtn.js';
 
 let query;
 let page = 1;
@@ -19,7 +25,13 @@ async function onFormSubmit(event) {
   event.preventDefault();
   query = event.target.elements.input.value.trim();
   page = 1;
+
+  onLoader();
+
   const data = await pixabayApi(query, page);
+  statusBtn();
+  // console.log(data);
+  const maxPage = Math.ceil(data.totalHits / perPage);
   if (!query) {
     beError(writeSomething);
     return;
@@ -27,18 +39,15 @@ async function onFormSubmit(event) {
   refs.galleryList.innerHTML = '';
   renderGallery(data.hits);
 
+  offLoader();
+
   event.target.reset();
 }
 
 async function onLoadMoreClick() {
-  query = event.current.target.elements.input.value.trim();
   page += 1;
   const data = await pixabayApi(query, page);
-  if (!query) {
-    beError(writeSomething);
-    return;
-  }
-
+  statusBtn();
   renderGallery(data.hits);
 }
 
@@ -60,14 +69,14 @@ function renderGallery(hits) {
   }
 }
 
-function statusBtn(data, page) {
+function statusBtn() {
   const maxPage = Math.ceil(data.totalHits / 15);
-  console.log(maxPage);
-  if (maxPage <= page) {
-    refs.loadMore.classList.add('hidden');
-    refs.loader.classList.add('hidden');
+  if (page >= maxPage) {
+    offBtnLoadMore();
+    offLoader();
     iziToast.error(endSearchesRults);
   } else {
-    refs.loadMore.classList.remove('hidden');
+    onBtnLoadMore();
+    onLoader();
   }
 }
