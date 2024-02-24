@@ -29,7 +29,7 @@ async function onFormSubmit(event) {
   onLoader();
 
   const data = await pixabayApi(query, page);
-  statusBtn();
+  statusBtn(data);
   // console.log(data);
   const maxPage = Math.ceil(data.totalHits / perPage);
   if (!query) {
@@ -43,11 +43,12 @@ async function onFormSubmit(event) {
 
   event.target.reset();
 }
+pixabayApi(query);
 
 async function onLoadMoreClick() {
   page += 1;
   const data = await pixabayApi(query, page);
-  statusBtn();
+  statusBtn(data);
   renderGallery(data.hits);
 }
 
@@ -69,7 +70,7 @@ function renderGallery(hits) {
   }
 }
 
-function statusBtn() {
+function statusBtn(data) {
   const maxPage = Math.ceil(data.totalHits / 15);
   if (page >= maxPage) {
     offBtnLoadMore();

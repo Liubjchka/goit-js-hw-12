@@ -28,4 +28,3 @@ function hitElement(hit) {
 export function hitElements(hits) {
   return hits.map(hitElement).join('');
 }
-// Виникає помилка
