@@ -38,6 +38,13 @@ async function onFormSubmit(event) {
   page = 1;
   const data = await pixabayApi(query, page);
 
+  if (data.hits.length === 0) {
+    beError(noImagesError);
+    offLoader();
+    offBtnLoadMore();
+    return;
+  }
+
   maxPage = Math.ceil(data.totalHits / 15);
   refs.galleryList.innerHTML = '';
   renderGallery(data.hits);
