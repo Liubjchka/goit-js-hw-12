@@ -24,10 +24,9 @@ refs.loadMore.addEventListener('click', onLoadMoreClick);
 async function onFormSubmit(event) {
   event.preventDefault();
   query = event.target.elements.input.value.trim();
-  page = 1;
 
   onLoader();
-
+  page = 1;
   const data = await pixabayApi(query, page);
   statusBtn(data);
   // console.log(data);
