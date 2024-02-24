@@ -51,8 +51,6 @@ async function onLoadMoreClick() {
   renderGallery(data.hits);
 }
 
-// ...
-
 function renderGallery(hits) {
   const result = hitElements(hits);
 
