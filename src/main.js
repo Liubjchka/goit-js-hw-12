@@ -38,7 +38,7 @@ async function onFormSubmit(event) {
   page = 1;
   const data = await pixabayApi(query, page);
 
-  if (data.hits === '') {
+  if (data.hits.length === 0) {
     beError(noImagesError);
     offLoader();
     offBtnLoadMore();
