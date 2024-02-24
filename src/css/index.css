@@ -139,15 +139,33 @@ span {
 }
 
 .loader {
-  margin: 8px auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 32px 0 #fff, -32px 0 #fff;
+  position: relative;
+
   animation: flash 0.5s ease-out infinite alternate;
 }
 
+@keyframes flash {
+  0% {
+    background-color: #fff2;
+    box-shadow: 32px 0 #fff2, -32px 0 #fff;
+  }
+  50% {
+    background-color: #fff;
+    box-shadow: 32px 0 #fff2, -32px 0 #fff2;
+  }
+  100% {
+    background-color: #fff2;
+    box-shadow: 32px 0 #fff, -32px 0 #fff2;
+  }
+}
+
 .btn-load-more {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 36px;
+  margin: 0 auto;
 
   border-radius: 8px;
   padding: 8px 16px;
@@ -164,9 +182,4 @@ span {
   color: #fff;
 
   border: none;
-}
-
-span {
-  margin-left: auto;
-  margin-right: auto;
 }

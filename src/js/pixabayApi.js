@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { searchImages } from 'pixabay-api';
+import { offBtnLoadMore } from './switchBtn';
 
 export async function pixabayApi(query, pageCount) {
   const API_KEY = '42447990-17cd7de231c9689be9e26f0f6';

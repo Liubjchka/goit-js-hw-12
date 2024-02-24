@@ -17,6 +17,7 @@ import {
 let query;
 let page = 1;
 const perPage = 15;
+let maxPage;
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMore.addEventListener('click', onLoadMoreClick);
@@ -28,26 +29,24 @@ async function onFormSubmit(event) {
   onLoader();
   page = 1;
   const data = await pixabayApi(query, page);
-  statusBtn(data);
-  // console.log(data);
-  const maxPage = Math.ceil(data.totalHits / perPage);
+  console.log(data);
+  maxPage = Math.ceil(data.totalHits / 15);
   if (!query) {
     beError(writeSomething);
     return;
   }
   refs.galleryList.innerHTML = '';
   renderGallery(data.hits);
-
   offLoader();
-
+  statusHiddenBtn(data, page);
   event.target.reset();
 }
 
 async function onLoadMoreClick() {
   page += 1;
   const data = await pixabayApi(query, page);
-  statusBtn(data);
   renderGallery(data.hits);
+  statusHiddenBtn(data, page);
 }
 
 function renderGallery(hits) {
@@ -70,14 +69,12 @@ function renderGallery(hits) {
   }
 }
 
-function statusBtn(data) {
-  const maxPage = Math.ceil(data.totalHits / 15);
+function statusHiddenBtn(data, page) {
   if (page >= maxPage) {
     offBtnLoadMore();
     offLoader();
     beError(noImagesError);
   } else {
     onBtnLoadMore();
-    onLoader();
   }
 }
