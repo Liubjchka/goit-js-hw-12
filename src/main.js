@@ -51,12 +51,16 @@ async function onLoadMoreClick() {
   renderGallery(data.hits);
 }
 
+// ...
+
 function renderGallery(hits) {
-  result = hits.map(hitElements).join('');
-  if (totalHits > perPage) {
+  const result = hitElements(hits);
+
+  if (hits.length > perPage) {
     refs.loadMore.classList.remove('hidden');
   }
-  if (hits.data.length) {
+
+  if (hits.length > 0) {
     refs.galleryList.insertAdjacentHTML('beforeend', result);
 
     const lightbox = new SimpleLightbox('.gallery a', {
