@@ -28,3 +28,11 @@ function hitElement(hit) {
 export function hitElements(hits) {
   return hits.map(hitElement).join('');
 }
+// export function hitElements(hits) {
+//   if (!hits || !Array.isArray(hits)) {
+//     return ''; // або інший пустий результат, якщо hits не є масивом
+//   } else {
+//   }
+
+//   return hits.map(hitElement).join('');
+// }

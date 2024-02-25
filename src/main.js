@@ -15,7 +15,7 @@ import {
 } from './js/switchBtn.js';
 
 let query;
-let page = 1;
+let page;
 const perPage = 15;
 let maxPage;
 let lightbox;
@@ -38,14 +38,6 @@ async function onFormSubmit(event) {
   page = 1;
   const data = await pixabayApi(query, page);
 
-  if (data.hits.length === 0) {
-    beError(noImagesError);
-    offLoader();
-    offBtnLoadMore();
-    return;
-  }
-
-  maxPage = Math.ceil(data.totalHits / 15);
   refs.galleryList.innerHTML = '';
   renderGallery(data.hits);
   offLoader();
@@ -85,7 +77,8 @@ function renderGallery(hits) {
   }
 }
 
-function statusHiddenBtn(page) {
+function statusHiddenBtn(data, page) {
+  maxPage = Math.ceil(data.totalHits / perPage);
   if (page >= maxPage) {
     offBtnLoadMore();
     offLoader();
